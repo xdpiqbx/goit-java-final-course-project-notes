@@ -1,3 +1,5 @@
+`admin`
+`super_secret_password`
 
 ## [Miro](https://miro.com/app/board/o9J_l1t0r8Y=/?moveToWidget=3074457362679673943&cot=14)
 
@@ -31,17 +33,19 @@ default - h2 in-memory
 
 ## Tasks
 
-- Створити міграцію з таблицями `author`, `note` (один до багатьох)
+- Створити міграцію з таблицями `author` (OneToMany), `note` (ManyToOne)
+- Entity's `Author` + `enum Authority` and `Note` + `enum AccessType`
 - Security (login : password)
 - `AuthController`
 ```java
 @Controller
+@RequestMapping("/login")
 public class AuthController{
   private final AuthService authService;
   
-  @GetMapping("/login")
+  @GetMapping
   public ModelAndView loginPage(){...}
-  @PostMapping("/login")
+  @PostMapping
   public RedirectView login(){
     // basic name and password validation!
     //    name - 5 to 50 symbols
@@ -54,12 +58,13 @@ public class AuthController{
 - `RegisterController`
 ```java
 @Controller
+@RequestMapping("/register")
 public class RegisterController{
   private final RegisterService registerService;
 
-  @GetMapping("/register")
+  @GetMapping
   public ModelAndView registerPage(){...}
-  @PostMapping("/register")
+  @PostMapping
   public RedirectView register(){
     // basic name and password validation!
     //    name - 5 to 50 symbols
@@ -71,8 +76,8 @@ public class RegisterController{
 ```
 - `NoteController`
 ```java
-@RequestMapping("/note")
 @Controller
+@RequestMapping("/note")
 public class NoteController {
   private final NoteService noteService;
 
