@@ -2,16 +2,16 @@ CREATE TABLE author(
     id IDENTITY PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     password VARCHAR(68) NOT NULL, -- {bcrypt}
-    authorities VARCHAR(7) NOT NULL,
+    authorities VARCHAR(7) DEFAULT 'USER' NOT NULL,
     CHECK (CHAR_LENGTH(name) >= 5 AND CHAR_LENGTH(name) <= 50),
-    CHECK (access_type IN ('USER', 'ADMIN', 'MANAGER'))
+    CHECK (authorities IN ('USER', 'ADMIN', 'MANAGER'))
 );
 
 CREATE TABLE note(
     id VARCHAR(36) PRIMARY KEY, -- UUID
     title VARCHAR(100),
     content VARCHAR(10000),
-    access_type VARCHAR(7) NOT NULL,
+    access_type VARCHAR(7) DEFAULT 'private' NOT NULL,
     author_id BIGINT NOT NULL,
     FOREIGN KEY (author_id) REFERENCES author(id),
     CHECK (CHAR_LENGTH(title) >= 5 AND CHAR_LENGTH(title) <= 100),
