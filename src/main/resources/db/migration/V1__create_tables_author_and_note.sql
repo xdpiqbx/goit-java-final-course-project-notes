@@ -2,9 +2,9 @@ CREATE TABLE author(
     id IDENTITY PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     password VARCHAR(68) NOT NULL, -- {bcrypt}
-    authorities VARCHAR(7) DEFAULT 'USER' NOT NULL,
+    authority VARCHAR(7) DEFAULT 'USER' NOT NULL,
     CHECK (CHAR_LENGTH(name) >= 5 AND CHAR_LENGTH(name) <= 50),
-    CHECK (authorities IN ('USER', 'ADMIN', 'MANAGER'))
+    CHECK (authority IN ('USER', 'ADMIN', 'MANAGER'))
 );
 
 CREATE TABLE note(
@@ -19,6 +19,6 @@ CREATE TABLE note(
     CHECK (access_type IN ('private', 'public'))
 );
 
-INSERT INTO author(name, password, authorities)
+INSERT INTO author(name, password, authority)
   VALUES
     ('admin', '{bcrypt}$2a$08$1dz1z.hv3D/Ad/vuiLZZrODTO/ncdoVXdMtkRn1/F7SvQjpiSDR/O', 'ADMIN');
