@@ -24,7 +24,9 @@ public class SecurityConfig {
         .requestMatchers("/h2-console").authenticated()
         .anyRequest().authenticated()
         .and()
-        .formLogin();
+        .formLogin()
+        .loginPage("/login")
+        .defaultSuccessUrl("/note/list", true);
     return http.build();
   }
 }

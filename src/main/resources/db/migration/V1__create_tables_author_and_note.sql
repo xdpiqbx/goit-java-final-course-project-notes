@@ -2,7 +2,7 @@ CREATE TABLE author(
     id IDENTITY PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     password VARCHAR(68) NOT NULL, -- {bcrypt}
-    authority VARCHAR(7) DEFAULT 'USER' NOT NULL,
+    authority VARCHAR(7) NOT NULL,
     CHECK (CHAR_LENGTH(name) >= 5 AND CHAR_LENGTH(name) <= 50),
     CHECK (authority IN ('USER', 'ADMIN', 'MANAGER'))
 );

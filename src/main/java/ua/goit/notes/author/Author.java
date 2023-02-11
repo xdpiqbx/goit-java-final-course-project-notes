@@ -16,6 +16,7 @@ public class Author {
   private String name;
   private String password;
   @Enumerated(EnumType.STRING)
+  @Column(columnDefinition = "varchar(7) default 'USER'")
   private Authority authority;
   @OneToMany (mappedBy = "author", cascade = CascadeType.REMOVE)
   @ToString.Exclude

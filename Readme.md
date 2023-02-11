@@ -38,7 +38,7 @@ default - h2 in-memory
 - Security (login : password)
   - `SecurityConfig` -> `public SecurityFilterChain securityFilterChain(...)`
   - `PasswordEncoderProvider`
-  - `public class AuthorDetailsService implements UserDetailsService`
+  - `AuthorDetailsService implements UserDetailsService`
   - `AuthorAuthProvider implements AuthenticationProvider`
 - `AuthController`
 ```java
