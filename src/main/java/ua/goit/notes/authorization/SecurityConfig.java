@@ -11,11 +11,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-  AuthorAuthProvider authorAuthProvider;
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
     http
-        .headers().frameOptions().sameOrigin()
+        .headers().frameOptions().sameOrigin() // for /h2-console
         .and()
         .csrf().disable()
         .authorizeHttpRequests()

@@ -36,6 +36,10 @@ default - h2 in-memory
 - Створити міграцію з таблицями `author` (OneToMany), `note` (ManyToOne)
 - Entity's `Author` + `enum Authority` and `Note` + `enum AccessType`
 - Security (login : password)
+  - `SecurityConfig` -> `public SecurityFilterChain securityFilterChain(...)`
+  - `PasswordEncoderProvider`
+  - `public class AuthorDetailsService implements UserDetailsService`
+  - `AuthorAuthProvider implements AuthenticationProvider`
 - `AuthController`
 ```java
 @Controller
