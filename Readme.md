@@ -118,6 +118,9 @@ public class NoteController {
   @GetMapping("/share/{id}")
   public ModelAndView createNote(@PathVariable(id) String id){
     // Якщо користувач відкриває сторінку з неіснуючою або приватною нотаткою, він бачить відповідний екран.
+    // get note by id
+    // if not private return note
+    // else return error page
   }
 }
 ```
