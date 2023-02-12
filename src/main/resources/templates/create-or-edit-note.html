@@ -19,26 +19,23 @@
 </head>
 <body>
   <div class="container-sm">
-  <h1 class="mt-2">Створити нотатку</h1>
-    <form
-      action="/note/create"
-      method="post"
-    >
+  <h1 class="mt-2" th:text="${note} == null ? 'Створити нотатку' : 'Редагувати нотатку'"></h1>
+    <form th:action="'/note/' + (${note} == null ? 'create' : 'edit')" method="post">
       <div class="mb-3">
         <label for="noteTitle" class="form-label">Заголовок нотатки</label>
-        <input type="text" name="title" class="form-control" id="noteTitle">
+        <input type="text" name="title" class="form-control" id="noteTitle" th:value="${note?.title}">
       </div>
       <div class="mb-3">
         <label for="noteContent" class="form-label">Зміст нотатки</label>
-        <textarea class="form-control" name="content" id="noteContent" rows="20"></textarea>
+        <textarea class="form-control" name="content" id="noteContent" rows="20" th:text="${note?.content}"></textarea>
       </div>
       <div class="float-lg-start w-50">
         <div class="col-4 ">
-          <input class="form-check-input" type="radio" name="accessType" value="private" id="private" checked>
+          <input class="form-check-input" type="radio" name="accessType" value="private" id="private" th:checked="(${private}) or (${private} == null and ${public} == null)">
           <label class="form-check-label" for="private">
             Private
           </label>
-          <input class="form-check-input" type="radio" name="accessType" value="public" id="public">
+          <input class="form-check-input" type="radio" name="accessType" value="public" id="public" th:checked="${public}">
           <label class="form-check-label" for="public">
             Public
           </label>
@@ -52,6 +49,7 @@
             Зберегти
           </button>
       </div>
+      <input type="hidden" name="id" th:value="${note?.id}" />
     </form>
   </div>
 </body>

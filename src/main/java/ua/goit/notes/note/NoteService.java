@@ -17,11 +17,6 @@ public class NoteService {
   }
 
   public void createNewNote(AuthorExtended authorExt, String title, String content, String accessType){
-    // basic note validation!
-    //    title - 5 to 100 symbols
-    //    content - 5 to 10 000 symbols
-    // if create status ok redirect to -> /note/list
-    // else redirect to -> /create-note-error-page with button -> /note/list
     Note note = new Note();
     note.setId(UUID.randomUUID().toString());
     note.setTitle(title);
@@ -29,6 +24,23 @@ public class NoteService {
     note.setAccessType(AccessType.valueOf(accessType.toUpperCase()));
       Author author = new Author();
       author.setId(authorExt.getId());
+    note.setAuthor(author);
+    noteRepository.save(note);
+  }
+
+  public Note getNoteById(String id){
+    return noteRepository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("Такої нотатки неіснує"));
+  }
+
+  public void editNote(String id, AuthorExtended authorExt, String title, String content, String accessType) {
+    Note note = new Note();
+    note.setId(id);
+    note.setTitle(title);
+    note.setContent(content);
+    note.setAccessType(AccessType.valueOf(accessType.toUpperCase()));
+    Author author = new Author();
+    author.setId(authorExt.getId());
     note.setAuthor(author);
     noteRepository.save(note);
   }

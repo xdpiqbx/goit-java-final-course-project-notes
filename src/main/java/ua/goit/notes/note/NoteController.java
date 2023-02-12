@@ -22,7 +22,7 @@ public class NoteController {
   }
   @GetMapping("/create")
   public ModelAndView pageCreateNote(){
-    return new ModelAndView("create-note");
+    return new ModelAndView("create-or-edit-note");
   }
   @PostMapping("/create")
   public RedirectView createNote(
@@ -31,32 +31,46 @@ public class NoteController {
       @RequestParam String accessType,
       Authentication authentication
   ){
+    // basic note validation!
+    //    title - 5 to 100 symbols
+    //    content - 5 to 10 000 symbols
+    // if create status ok redirect to -> /note/list
+    // else redirect to -> /create-note-error-page with button -> /note/list
     AuthorExtended author = (AuthorExtended)authentication.getPrincipal();
-    noteService.createNewNote(author,title,content,accessType);
+    noteService.createNewNote(author, title, content, accessType);
     return new RedirectView("/note/list");
   }
   @GetMapping("/edit")
   public ModelAndView pageEditNote(@RequestParam String id){
-    // Всі поля вже заповнені змістом старої нотатки
-    // Поле "Ім'я нотатки" - <input type="text">
-    // Поле "Вміст нотатки" - <textarea rows="20">
-    // Вибір типу нотатки - це радіобаттони, за замовчуванням вибрано варіант "Приватне посилання"
-    return null;
+    Note note = noteService.getNoteById(id);
+    ModelAndView result = new ModelAndView("create-or-edit-note");
+    result.addObject("note", note);
+    result.addObject("public", note.getAccessType().getType().equals("public"));
+    result.addObject("private", note.getAccessType().getType().equals("private"));
+    return result;
   }
   @PostMapping("/edit")
-  public RedirectView editNote(){
+  public RedirectView editNote(
+      @RequestParam String id,
+      @RequestParam String title,
+      @RequestParam String content,
+      @RequestParam String accessType,
+      Authentication authentication
+  ){
     // basic note validation!
     //    title - 5 to 100 symbols
     //    content - 5 to 10 000 symbols
     // if edit status ok redirect to -> /note/list
     // else redirect to -> /edit-note-error-page with button -> /note/list
-    return null;
+    AuthorExtended author = (AuthorExtended)authentication.getPrincipal();
+    noteService.editNote(id, author, title, content, accessType);
+    return new RedirectView("/note/list");
   }
   @GetMapping("/share/{id}")
   public ModelAndView createNote(@PathVariable("id") String id){
     // Якщо користувач відкриває сторінку з неіснуючою або приватною нотаткою, він бачить відповідний екран.
     // get note by id
-    // if not private return note
+    // if not public return note
     // else return error page
     return null;
   }
