@@ -68,10 +68,18 @@ public class NoteController {
   }
   @GetMapping("/share/{id}")
   public ModelAndView createNote(@PathVariable("id") String id){
-    // Якщо користувач відкриває сторінку з неіснуючою або приватною нотаткою, він бачить відповідний екран.
-    // get note by id
-    // if not public return note
-    // else return error page
-    return null;
+    Note note = noteService.getNoteById(id);
+    if(note.getAccessType().getType().equals("private")){
+      return new ModelAndView("note-not-exists");
+    }
+    ModelAndView result = new ModelAndView("note");
+    result.addObject("note", note);
+    return result;
+  }
+
+  @PostMapping("/delete")
+  public RedirectView deleteNote(@RequestParam String id){
+    noteService.deleteById(id);
+    return new RedirectView("/note/list");
   }
 }

@@ -30,7 +30,13 @@ public class NoteService {
 
   public Note getNoteById(String id){
     return noteRepository.findById(id)
-        .orElseThrow(() -> new IllegalArgumentException("Такої нотатки неіснує"));
+        .orElseGet(()-> {
+          Note note = new Note();
+          note.setTitle("Not exists");
+          note.setContent("Empty");
+          note.setAccessType(AccessType.PRIVATE);
+          return note;
+        });
   }
 
   public void editNote(String id, AuthorExtended authorExt, String title, String content, String accessType) {
@@ -43,5 +49,8 @@ public class NoteService {
     author.setId(authorExt.getId());
     note.setAuthor(author);
     noteRepository.save(note);
+  }
+  public void deleteById(String id){
+    noteRepository.deleteById(id);
   }
 }
