@@ -1,10 +1,14 @@
 package ua.goit.notes.note;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+import ua.goit.notes.author.AuthorExtended;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/note")
@@ -12,9 +16,12 @@ import org.springframework.web.servlet.view.RedirectView;
 public class NoteController {
   private final NoteService noteService;
   @GetMapping("/list")
-  public ModelAndView getListOfNotes(){
+  public ModelAndView getListOfNotes(Authentication authentication){
     // All authors notes
     // + Текст "Мої нотатки - 3 шт" - це скільки у користувача є нотаток.
+    AuthorExtended authorExtended = (AuthorExtended)authentication.getPrincipal();
+    List<Note> allByAuthorId = noteService.findAllByAuthorId(authorExtended.getId());
+    System.out.println(allByAuthorId);
     return new ModelAndView("note-list");
   }
   @GetMapping("/create")

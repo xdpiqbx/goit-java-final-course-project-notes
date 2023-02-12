@@ -14,6 +14,7 @@ public class Author {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
   private String name;
+  @ToString.Exclude
   private String password;
   @Enumerated(EnumType.STRING)
   @Column(columnDefinition = "varchar(7) default 'USER'")

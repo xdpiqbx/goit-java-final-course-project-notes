@@ -11,12 +11,12 @@ CREATE TABLE note(
     id VARCHAR(36) PRIMARY KEY, -- UUID
     title VARCHAR(100),
     content VARCHAR(10000),
-    access_type VARCHAR(7) DEFAULT 'private' NOT NULL,
+    access_type VARCHAR(7) DEFAULT 'PRIVATE' NOT NULL,
     author_id BIGINT NOT NULL,
     FOREIGN KEY (author_id) REFERENCES author(id),
     CHECK (CHAR_LENGTH(title) >= 5 AND CHAR_LENGTH(title) <= 100),
     CHECK (CHAR_LENGTH(content) >= 5 AND CHAR_LENGTH(content) <= 10000),
-    CHECK (access_type IN ('private', 'public'))
+    CHECK (access_type IN ('PRIVATE', 'PUBLIC'))
 );
 
 INSERT INTO author(name, password, authority)

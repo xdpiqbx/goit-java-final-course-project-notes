@@ -6,10 +6,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ua.goit.notes.author.AuthorExtended;
+import ua.goit.notes.author.AuthorDetails;
+
 
 @Service
 @RequiredArgsConstructor
@@ -20,8 +21,8 @@ public class AuthorAuthProvider implements AuthenticationProvider {
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
     String username = authentication.getName();
     String password = authentication.getCredentials().toString();
-    UserDetails user = authorDetailsService.loadUserByUsername(username);
-    return checkPassword(user, password);
+    AuthorDetails author = authorDetailsService.loadUserByUsername(username);
+    return checkPassword(author, password);
   }
 
   @Override
@@ -29,14 +30,15 @@ public class AuthorAuthProvider implements AuthenticationProvider {
     return  UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
   }
 
-  private Authentication checkPassword(UserDetails user, String rawPassword){
-    if(passwordEncoder.matches(rawPassword, user.getPassword())){
-      User innerUser = new User(
-          user.getUsername(),
-          user.getPassword(),
-          user.getAuthorities()
+  private Authentication checkPassword(AuthorDetails author, String rawPassword){
+    if(passwordEncoder.matches(rawPassword, author.getPassword())){
+      AuthorExtended innerAuthor = new AuthorExtended(
+          author.getId(),
+          author.getUsername(),
+          author.getPassword(),
+          author.getAuthorities()
       );
-      return new UsernamePasswordAuthenticationToken(innerUser, user.getPassword(), user.getAuthorities());
+      return new UsernamePasswordAuthenticationToken(innerAuthor, author.getPassword(), author.getAuthorities());
     }else{
       throw new BadCredentialsException("Bad credentials");
     }
