@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import ua.goit.notes.author.AuthorExtended;
 import ua.goit.notes.author.AuthorDetails;
 
-
 @Service
 @RequiredArgsConstructor
 public class AuthorAuthProvider implements AuthenticationProvider {
