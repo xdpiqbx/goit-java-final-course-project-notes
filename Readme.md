@@ -5,12 +5,13 @@ Environment Variables:
 - `DB_USERNAME`
 - `DB_PASSWORD`
 
-`spring.datasource.username=${DB_USERNAME}`
-
 ---
 
-`admin`
-`super_secret_password`
+Default credentials: 
+
+`admin` `super_secret_password`
+
+---
 
 ## [Miro](https://miro.com/app/board/o9J_l1t0r8Y=/?moveToWidget=3074457362679673943&cot=14)
 
@@ -28,29 +29,22 @@ Environment Variables:
 /note/create
 /note/edit
 /note/share/{id}
+/note/delete
+/note/addmock
 ```
-
----
-
-prod - СУБД PostgreSQL
-
-default - h2 in-memory
-
-`spring.datasource.username=${DB_USERNAME}`
-
-Змінні оточення повинні бути описані в файлі `readme.md`
 
 ---
 
 ## Tasks
 
-- Створити міграцію з таблицями `author` (OneToMany), `note` (ManyToOne)
+- Створити міграції з таблицями `author` (OneToMany), `note` (ManyToOne)
 - Entity's `Author` + `enum Authority` and `Note` + `enum AccessType`
 - Security (login : password)
   - `SecurityConfig` -> `public SecurityFilterChain securityFilterChain(...)`
-  - `PasswordEncoderProvider`
-  - `AuthorDetailsService implements UserDetailsService`
+  - `AuthController`
   - `AuthorAuthProvider implements AuthenticationProvider`
+  - `AuthorDetailsService implements UserDetailsService`
+  - `PasswordEncoderProvider`
 - `AuthController`
 ```java
 @Controller
@@ -142,6 +136,15 @@ public class NoteController {
     // if not private return note
     // else return error page
   }
+  
+  @PostMapping("/delete")
+  public RedirectView deleteNote(@RequestParam String id){...}
+  
+  @GetMapping("/create-edit-note-error-page")
+  public ModelAndView errorPageCreateEdit(){ ... }
+
+  @GetMapping("/addmock")
+  public RedirectView createNote(Authentication authentication){ ... }
 }
 ```
 - [https://www.bootstrapcdn.com/](https://www.bootstrapcdn.com/)
