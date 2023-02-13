@@ -56,13 +56,12 @@ public class NoteController {
       @RequestParam String accessType,
       Authentication authentication
   ){
+    if(!validationService.isContentValid(content) || !validationService.isTitleValid(title)){
+      return new RedirectView("/note/create-edit-note-error-page");
+    }
     AuthorExtended author = (AuthorExtended)authentication.getPrincipal();
     noteService.editNote(id, author, title, content, accessType);
     return new RedirectView("/note/list");
-  }
-  @GetMapping("/create-edit-note-error-page")
-  public ModelAndView errorPageCreateEdit(){
-    return new ModelAndView("create-edit-note-error-page");
   }
   @GetMapping("/share/{id}")
   public ModelAndView createNote(@PathVariable("id") String id){
@@ -74,10 +73,13 @@ public class NoteController {
     result.addObject("note", note);
     return result;
   }
-
   @PostMapping("/delete")
   public RedirectView deleteNote(@RequestParam String id){
     noteService.deleteById(id);
     return new RedirectView("/note/list");
+  }
+  @GetMapping("/create-edit-note-error-page")
+  public ModelAndView errorPageCreateEdit(){
+    return new ModelAndView("create-edit-note-error-page");
   }
 }
