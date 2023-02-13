@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 import ua.goit.notes.author.Author;
 import ua.goit.notes.author.AuthorExtended;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -56,11 +55,32 @@ public class NoteService {
   public void deleteById(String id){
     noteRepository.deleteById(id);
   }
-added
+
   public String convertMarkdownToHtml(String content){
     Parser parser = Parser.builder().build();
     Node node = parser.parse(content);
     HtmlRenderer renderer = HtmlRenderer.builder().build();
     return renderer.render(node);
+  }
+  public void setMockData(AuthorExtended authorExt){
+    String[] strings = {
+      "Single Responsibility Principle#a class should do one thing and therefore it should have only a single reason to change",
+      "Open-Closed Principle#classes should be open for extension and closed to modification",
+      "Liskov Substitution Principle#subclasses should be substitutable for their base classes",
+      "Interface Segregation Principle#is about separating the interfaces",
+      "Dependency Inversion Principle#classes should depend upon interfaces or abstract classes instead of concrete classes and functions"
+    };
+    Author author = new Author();
+    Arrays.stream(strings).forEach(str->{
+      Note note = new Note();
+      String[] titleContent = str.split("#");
+      note.setId(UUID.randomUUID().toString());
+      note.setTitle(titleContent[0]);
+      note.setContent(titleContent[1]);
+      note.setAccessType(AccessType.PRIVATE);
+      author.setId(authorExt.getId());
+      note.setAuthor(author);
+      noteRepository.save(note);
+    });
   }
 }

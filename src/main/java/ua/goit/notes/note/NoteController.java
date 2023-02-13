@@ -83,4 +83,11 @@ public class NoteController {
   public ModelAndView errorPageCreateEdit(){
     return new ModelAndView("create-edit-note-error-page");
   }
+
+  @GetMapping("/addmock")
+  public RedirectView createNote(Authentication authentication){
+    AuthorExtended author = (AuthorExtended)authentication.getPrincipal();
+    noteService.setMockData(author);
+    return new RedirectView("/note/list");
+  }
 }

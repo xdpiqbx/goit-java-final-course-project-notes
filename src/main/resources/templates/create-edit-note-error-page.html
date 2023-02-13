@@ -9,21 +9,23 @@
         rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
         crossorigin="anonymous">
   <style>
-    .row {
+    .row{
       height: 100vh;
-      font-size: 50px;
+      font-size: 18px;
     }
   </style>
   <title>Нотатки</title>
 </head>
   <body>
-      <div class="container-sm justify-content-center align-items-center">
-        <p>Помилка!</p>
-        <p>Заголовок нотатки має містити від 5 до 100 символів.</p>
-        <p>Зміст нотатки має містити від 5 до 10 000 символів.</p>
-        <a href="/note/list" type="button" class="btn btn-outline-primary btn-block mb-2">
-          Повернутись до списку нотаток
-        </a>
+      <div class="row justify-content-md-center align-items-center">
+        <div class="col col-md-auto text-center">
+          <p class="text-center"><strong>Помилка!</strong></p>
+          <p class="text-center">Заголовок нотатки має містити від 5 до 100 символів.</p>
+          <p class="text-center">Зміст нотатки має містити від 5 до 10 000 символів.</p>
+          <a href="/note/list" type="button" class="btn btn-outline-primary btn-block mb-2">
+            Повернутись до списку нотаток
+          </a>
+        </div>
       </div>
   </body>
 </html>

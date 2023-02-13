@@ -1,3 +1,14 @@
+Environment Variables:
+
+- `PROFILE` (default - `dev`; production - `prod`)
+- `DB_URL`
+- `DB_USERNAME`
+- `DB_PASSWORD`
+
+`spring.datasource.username=${DB_USERNAME}`
+
+---
+
 `admin`
 `super_secret_password`
 

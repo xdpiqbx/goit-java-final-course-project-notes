@@ -1,5 +1,5 @@
 CREATE TABLE author(
-    id IDENTITY PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     password VARCHAR(68) NOT NULL, -- {bcrypt}
     authority VARCHAR(7) NOT NULL,
@@ -18,7 +18,3 @@ CREATE TABLE note(
     CHECK (CHAR_LENGTH(content) >= 5 AND CHAR_LENGTH(content) <= 10000),
     CHECK (access_type IN ('PRIVATE', 'PUBLIC'))
 );
-
-INSERT INTO author(name, password, authority)
-  VALUES
-    ('admin', '{bcrypt}$2a$08$1dz1z.hv3D/Ad/vuiLZZrODTO/ncdoVXdMtkRn1/F7SvQjpiSDR/O', 'ADMIN');
