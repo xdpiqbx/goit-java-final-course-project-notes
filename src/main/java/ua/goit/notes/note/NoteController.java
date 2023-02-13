@@ -13,6 +13,7 @@ import ua.goit.notes.author.AuthorExtended;
 @RequiredArgsConstructor
 public class NoteController {
   private final NoteService noteService;
+  private final NoteValidationService validationService;
   @GetMapping("/list")
   public ModelAndView getListOfNotes(Authentication authentication){
     AuthorExtended authorExtended = (AuthorExtended)authentication.getPrincipal();
@@ -31,11 +32,9 @@ public class NoteController {
       @RequestParam String accessType,
       Authentication authentication
   ){
-    // basic note validation!
-    //    title - 5 to 100 symbols
-    //    content - 5 to 10 000 symbols
-    // if create status ok redirect to -> /note/list
-    // else redirect to -> /create-note-error-page with button -> /note/list
+    if(!validationService.isContentValid(content) || !validationService.isTitleValid(title)){
+      return new RedirectView("/note/create-edit-note-error-page");
+    }
     AuthorExtended author = (AuthorExtended)authentication.getPrincipal();
     noteService.createNewNote(author, title, content, accessType);
     return new RedirectView("/note/list");
@@ -57,14 +56,13 @@ public class NoteController {
       @RequestParam String accessType,
       Authentication authentication
   ){
-    // basic note validation!
-    //    title - 5 to 100 symbols
-    //    content - 5 to 10 000 symbols
-    // if edit status ok redirect to -> /note/list
-    // else redirect to -> /edit-note-error-page with button -> /note/list
     AuthorExtended author = (AuthorExtended)authentication.getPrincipal();
     noteService.editNote(id, author, title, content, accessType);
     return new RedirectView("/note/list");
+  }
+  @GetMapping("/create-edit-note-error-page")
+  public ModelAndView errorPageCreateEdit(){
+    return new ModelAndView("create-edit-note-error-page");
   }
   @GetMapping("/share/{id}")
   public ModelAndView createNote(@PathVariable("id") String id){
