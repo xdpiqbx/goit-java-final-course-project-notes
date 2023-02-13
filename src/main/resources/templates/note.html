@@ -20,7 +20,7 @@
   <body>
     <div class="container-sm">
       <h1 class="mt-2" th:text="${note.title}"></h1>
-      <h2 class="mt-2" th:text="${note.content}"></h2>
+      <h2 class="mt-2" th:utext="${note.content}"></h2>
     </div>
   </body>
 </html>

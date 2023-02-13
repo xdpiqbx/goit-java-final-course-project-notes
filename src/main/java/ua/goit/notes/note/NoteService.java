@@ -1,6 +1,9 @@
 package ua.goit.notes.note;
 
 import lombok.RequiredArgsConstructor;
+import org.commonmark.node.Node;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.stereotype.Service;
 import ua.goit.notes.author.Author;
 import ua.goit.notes.author.AuthorExtended;
@@ -52,5 +55,12 @@ public class NoteService {
   }
   public void deleteById(String id){
     noteRepository.deleteById(id);
+  }
+
+  public String convertMarkdownToHtml(String content){
+    Parser parser = Parser.builder().build();
+    Node node = parser.parse(content);
+    HtmlRenderer renderer = HtmlRenderer.builder().build();
+    return renderer.render(node);
   }
 }

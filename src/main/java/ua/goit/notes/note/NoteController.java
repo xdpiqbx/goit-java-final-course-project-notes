@@ -69,6 +69,7 @@ public class NoteController {
     if(note.getAccessType().getType().equals("private")){
       return new ModelAndView("note-not-exists");
     }
+    note.setContent(noteService.convertMarkdownToHtml(note.getContent()));
     ModelAndView result = new ModelAndView("note");
     result.addObject("note", note);
     return result;
