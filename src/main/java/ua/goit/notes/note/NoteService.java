@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
+import org.commonmark.renderer.text.TextContentRenderer;
 import org.springframework.stereotype.Service;
 import ua.goit.notes.author.Author;
 import ua.goit.notes.author.AuthorExtended;
@@ -15,6 +16,10 @@ import java.util.*;
 public class NoteService {
   private final NoteRepository noteRepository;
   public List<Note> findAllByAuthorId(long id){
+    List<Note> allByAuthorId = noteRepository.findAllByAuthorId(id);
+    allByAuthorId.forEach(note -> {
+      note.setContent(this.convertMarkdownToPlainText(note.getContent()));
+    });
     return noteRepository.findAllByAuthorId(id);
   }
 
@@ -62,6 +67,14 @@ public class NoteService {
     HtmlRenderer renderer = HtmlRenderer.builder().build();
     return renderer.render(node);
   }
+
+  public  String convertMarkdownToPlainText(String mdDoc){
+    Parser parser = Parser.builder().build();
+    Node node = parser.parse(mdDoc);
+    TextContentRenderer renderer = TextContentRenderer.builder().build();
+    return renderer.render(node);
+  }
+
   public void setMockData(AuthorExtended authorExt){
     String[] strings = {
       "Single Responsibility Principle#a class should do one thing and therefore it should have only a single reason to change",
