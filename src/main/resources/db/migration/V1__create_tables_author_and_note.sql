@@ -13,7 +13,7 @@ CREATE TABLE note(
     content VARCHAR(10000),
     access_type VARCHAR(7) DEFAULT 'PRIVATE' NOT NULL,
     author_id BIGINT NOT NULL,
-    FOREIGN KEY (author_id) REFERENCES author(id),
+    FOREIGN KEY (author_id) REFERENCES author(id) ON DELETE CASCADE,
     CHECK (CHAR_LENGTH(title) >= 5 AND CHAR_LENGTH(title) <= 100),
     CHECK (CHAR_LENGTH(content) >= 5 AND CHAR_LENGTH(content) <= 10000),
     CHECK (access_type IN ('PRIVATE', 'PUBLIC'))
