@@ -41,3 +41,17 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+bootJar{
+	archiveFileName = 'notes-app.jar'
+}
+
+tasks.register('release', Copy){
+	from layout.buildDirectory.file("./libs/notes-app.jar")
+	into layout.projectDirectory.dir("/release")
+	doLast {
+		delete file(layout.buildDirectory.file("./libs/notes-app.jar"))
+	}
+}
+
+release.dependsOn bootJar
