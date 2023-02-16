@@ -20,6 +20,7 @@ public class SecurityConfig {
         .authorizeHttpRequests()
         .requestMatchers("/login").permitAll()
         .requestMatchers("/register").permitAll()
+        .requestMatchers("/note/share/**").permitAll()
         .requestMatchers("/note/**").authenticated()
         .requestMatchers("/h2-console").authenticated()
         .anyRequest().authenticated()
