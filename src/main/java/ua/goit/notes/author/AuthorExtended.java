@@ -9,10 +9,6 @@ public class AuthorExtended extends User{
     super(username, password, authorities);
     this.id = id;
   }
-  public AuthorExtended(long id, String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
-    super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-    this.id = id;
-  }
   public long getId() {
     return id;
   }
