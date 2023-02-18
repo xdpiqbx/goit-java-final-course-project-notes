@@ -9,7 +9,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.goit.notes.author.AuthorExtended;
-import ua.goit.notes.author.AuthorDetails;
 
 @Service
 @RequiredArgsConstructor

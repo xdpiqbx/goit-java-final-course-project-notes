@@ -1,4 +1,4 @@
-package ua.goit.notes.author;
+package ua.goit.notes.authorization;
 
 import org.springframework.security.core.userdetails.UserDetails;
 

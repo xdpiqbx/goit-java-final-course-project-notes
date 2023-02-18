@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ua.goit.notes.author.Author;
-import ua.goit.notes.author.AuthorDetails;
 import ua.goit.notes.author.AuthorRepository;
 
 import java.util.ArrayList;
