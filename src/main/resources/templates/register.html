@@ -12,7 +12,7 @@
 <body>
 <div class="container">
   <div class="alert alert-danger" role="alert" th:if="${isValidName} == false">
-    Помилка - логін має бути від 5 до 50 символів
+    Помилка - логін може містити будь-які символи латиниці та цифри. Довжина – від 5 до 50 символів
   </div>
   <div class="alert alert-danger" role="alert" th:if="${isValidPass} == false">
     Помилка - пароль має бути від 8 до 100 символів

@@ -1,0 +1,19 @@
+package ua.goit.notes.register;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+import org.springframework.stereotype.Component;
+
+@Component
+@Data
+public class RegisterForm {
+  @NotBlank(message = "Name is mandatory")
+  @Size(min = 5, max = 50)
+  @Pattern(regexp = "^[a-zA-Z\\d]*$")
+  private String username;
+  @NotBlank(message = "Password is mandatory")
+  @Size(min = 8, max = 100)
+  private String password;
+}

@@ -1,8 +1,12 @@
 package ua.goit.notes.note;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -27,14 +31,14 @@ public class NoteController {
   }
   @PostMapping("/create")
   public RedirectView createNote(
-      @RequestParam String title,
-      @RequestParam String content,
+      @Valid @RequestParam String title,
+      @Valid @RequestParam String content,
       @RequestParam String accessType,
       Authentication authentication
   ){
-    if(!validationService.isContentValid(content) || !validationService.isTitleValid(title)){
-      return new RedirectView("/note/create-edit-note-error-page");
-    }
+//    if(!validationService.isContentValid(content) || !validationService.isTitleValid(title)){
+//      return new RedirectView("/note/create-edit-note-error-page");
+//    }
     AuthorExtended author = (AuthorExtended)authentication.getPrincipal();
     noteService.createNewNote(author, title, content, accessType);
     return new RedirectView("/note/list");
@@ -51,14 +55,14 @@ public class NoteController {
   @PostMapping("/edit")
   public RedirectView editNote(
       @RequestParam String id,
-      @RequestParam String title,
-      @RequestParam String content,
+      @Valid @RequestParam String title,
+      @Valid @RequestParam String content,
       @RequestParam String accessType,
       Authentication authentication
   ){
-    if(!validationService.isContentValid(content) || !validationService.isTitleValid(title)){
-      return new RedirectView("/note/create-edit-note-error-page");
-    }
+//    if(!validationService.isContentValid(content) || !validationService.isTitleValid(title)){
+//      return new RedirectView("/note/create-edit-note-error-page");
+//    }
     AuthorExtended author = (AuthorExtended)authentication.getPrincipal();
     noteService.editNote(id, author, title, content, accessType);
     return new RedirectView("/note/list");
