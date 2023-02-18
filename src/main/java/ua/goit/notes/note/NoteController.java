@@ -20,6 +20,7 @@ public class NoteController {
     AuthorExtended authorExtended = (AuthorExtended)authentication.getPrincipal();
     ModelAndView result = new ModelAndView("note-list");
     result.addObject("notes", noteService.findAllByAuthorId(authorExtended.getId()));
+    result.addObject("author", authorExtended.getUsername());
     return result;
   }
   @GetMapping("/create")
