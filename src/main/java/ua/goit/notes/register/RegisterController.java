@@ -31,7 +31,7 @@ public class RegisterController {
       result.addObject("isValidPass", !validate.contains("password"));
       return result;
     }
-    registerService.add(registerForm.getUsername(), registerForm.getPassword());
+    registerService.add(registerForm);
     return new ModelAndView("login");
   }
 }
