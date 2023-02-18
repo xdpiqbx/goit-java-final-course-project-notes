@@ -2,10 +2,8 @@ package ua.goit.notes.note;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,7 +15,6 @@ import ua.goit.notes.author.AuthorExtended;
 @RequiredArgsConstructor
 public class NoteController {
   private final NoteService noteService;
-  private final NoteValidationService validationService;
   @GetMapping("/list")
   public ModelAndView getListOfNotes(Authentication authentication){
     AuthorExtended authorExtended = (AuthorExtended)authentication.getPrincipal();
@@ -31,16 +28,15 @@ public class NoteController {
   }
   @PostMapping("/create")
   public RedirectView createNote(
-      @Valid @RequestParam String title,
-      @Valid @RequestParam String content,
-      @RequestParam String accessType,
-      Authentication authentication
+    Authentication authentication,
+    @Valid @ModelAttribute NoteDTO noteDTO,
+    BindingResult bindingResult
   ){
-//    if(!validationService.isContentValid(content) || !validationService.isTitleValid(title)){
-//      return new RedirectView("/note/create-edit-note-error-page");
-//    }
+    if (bindingResult.hasErrors()){
+      return new RedirectView("/note/create-edit-note-error-page");
+    }
     AuthorExtended author = (AuthorExtended)authentication.getPrincipal();
-    noteService.createNewNote(author, title, content, accessType);
+    noteService.createNewNote(author, noteDTO);
     return new RedirectView("/note/list");
   }
   @GetMapping("/edit")
@@ -54,17 +50,15 @@ public class NoteController {
   }
   @PostMapping("/edit")
   public RedirectView editNote(
-      @RequestParam String id,
-      @Valid @RequestParam String title,
-      @Valid @RequestParam String content,
-      @RequestParam String accessType,
-      Authentication authentication
+    Authentication authentication,
+    @Valid @ModelAttribute NoteDTO noteDTO,
+    BindingResult bindingResult
   ){
-//    if(!validationService.isContentValid(content) || !validationService.isTitleValid(title)){
-//      return new RedirectView("/note/create-edit-note-error-page");
-//    }
+    if (bindingResult.hasErrors()){
+      return new RedirectView("/note/create-edit-note-error-page");
+    }
     AuthorExtended author = (AuthorExtended)authentication.getPrincipal();
-    noteService.editNote(id, author, title, content, accessType);
+    noteService.editNote(author, noteDTO);
     return new RedirectView("/note/list");
   }
   @GetMapping("/share/{id}")

@@ -23,12 +23,12 @@ public class NoteService {
     return noteRepository.findAllByAuthorId(id);
   }
 
-  public void createNewNote(AuthorExtended authorExt, String title, String content, String accessType){
+  public void createNewNote(AuthorExtended authorExt, NoteDTO noteDTO){
     Note note = new Note();
     note.setId(UUID.randomUUID().toString());
-    note.setTitle(title);
-    note.setContent(content);
-    note.setAccessType(AccessType.valueOf(accessType.toUpperCase()));
+    note.setTitle(noteDTO.getTitle());
+    note.setContent(noteDTO.getContent());
+    note.setAccessType(AccessType.valueOf(noteDTO.getAccessType().name().toUpperCase()));
       Author author = new Author();
       author.setId(authorExt.getId());
     note.setAuthor(author);
@@ -46,14 +46,14 @@ public class NoteService {
         });
   }
 
-  public void editNote(String id, AuthorExtended authorExt, String title, String content, String accessType) {
+  public void editNote(AuthorExtended authorExt, NoteDTO noteDTO) {
     Note note = new Note();
-    note.setId(id);
-    note.setTitle(title);
-    note.setContent(content);
-    note.setAccessType(AccessType.valueOf(accessType.toUpperCase()));
-    Author author = new Author();
-    author.setId(authorExt.getId());
+    note.setId(noteDTO.getId());
+    note.setTitle(noteDTO.getTitle());
+    note.setContent(noteDTO.getContent());
+    note.setAccessType(AccessType.valueOf(noteDTO.getAccessType().name().toUpperCase()));
+      Author author = new Author();
+      author.setId(authorExt.getId());
     note.setAuthor(author);
     noteRepository.save(note);
   }
