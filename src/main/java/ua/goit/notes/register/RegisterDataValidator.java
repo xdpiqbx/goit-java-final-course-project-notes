@@ -11,8 +11,8 @@ import java.util.List;
 public class RegisterDataValidator {
   private final ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
   private final Validator validator = factory.getValidator();
-  public List<String> validate(RegisterForm registerForm){
-    return validator.validate(registerForm)
+  public List<String> validate(RegisterFormData registerFormData){
+    return validator.validate(registerFormData)
       .stream()
       .map(violation -> violation.getPropertyPath().toString())
       .toList();

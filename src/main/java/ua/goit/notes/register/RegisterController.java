@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @RestController
 @RequestMapping("/register")
@@ -21,17 +20,17 @@ public class RegisterController {
   }
   @PostMapping
   public ModelAndView register(
-      @Valid @ModelAttribute("registerForm") RegisterForm registerForm,
+      @Valid @ModelAttribute RegisterFormData registerFormData,
       BindingResult bindingResult
   ){
     if (bindingResult.hasErrors()){
       ModelAndView result = new ModelAndView("register");
-      List<String> validate = registerDataValidator.validate(registerForm);
+      List<String> validate = registerDataValidator.validate(registerFormData);
       result.addObject("isValidName", !validate.contains("username"));
       result.addObject("isValidPass", !validate.contains("password"));
       return result;
     }
-    registerService.add(registerForm);
+    registerService.add(registerFormData);
     return new ModelAndView("login");
   }
 }

@@ -11,10 +11,10 @@ import ua.goit.notes.author.Authority;
 public class RegisterService {
   private final RegisterRepository registerRepository;
   private final PasswordEncoder passwordEncoder;
-  public void add(RegisterForm registerForm){
+  public void add(RegisterFormData registerFormData){
     Author author = new Author();
-    author.setName(registerForm.getUsername());
-    author.setPassword(passwordEncoder.encode(registerForm.getPassword()));
+    author.setName(registerFormData.getUsername());
+    author.setPassword(passwordEncoder.encode(registerFormData.getPassword()));
     author.setAuthority(Authority.USER);
     registerRepository.save(author);
   }

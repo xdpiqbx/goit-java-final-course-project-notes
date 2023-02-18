@@ -5,7 +5,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import org.springframework.stereotype.Component;
 
 @Data
 public class NoteDTO {
