@@ -17,6 +17,12 @@
   <div class="alert alert-danger" role="alert" th:if="${isValidPass} == false">
     Помилка - пароль має бути від 8 до 100 символів
   </div>
+  <div class="alert alert-danger" role="alert" th:if="${isAnswersCorrect} == false">
+    Москалик Detected!
+  </div>
+  <div class="alert alert-danger" role="alert" th:if="${userAlreadyExists} != null">
+    Логін <b th:text="${userAlreadyExists}"></b> вже зайнятий. Спробуйте ще раз.
+  </div>
   <form class="form-signin" method="post" action="/register">
     <h2 class="form-signin-heading">Реєстрація</h2>
     <p>
@@ -27,6 +33,16 @@
       <label for="password" class="sr-only">Пароль</label>
       <input type="password" id="password" name="password" class="form-control" placeholder="Пароль" required>
     </p>
+    <ul class="list-group mb-3">
+      <li class="list-group-item pt-1 pb-1 pl-2" th:each="question: ${questions}">
+        <div class="form-check form-check-inline ml-4 mb-0 align-middle">
+          <input class="form-check-input mt-2" type="checkbox" name="answers" th:value="${question}" th:id="${question}">
+          <label class="form-check-label pl-1" th:for="${question}" th:text="${question}">
+            Empty label
+          </label>
+        </div>
+      </li>
+    </ul>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Зареєструватись</button>
   </form>
 </div>
