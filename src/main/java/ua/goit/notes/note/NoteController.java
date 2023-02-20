@@ -8,19 +8,24 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+import ua.goit.notes.author.Author;
 import ua.goit.notes.author.AuthorExtended;
+import ua.goit.notes.author.AuthorService;
 
 @Controller
 @RequestMapping("/note")
 @RequiredArgsConstructor
 public class NoteController {
   private final NoteService noteService;
+  private final AuthorService authorService;
   @GetMapping("/list")
   public ModelAndView getListOfNotes(Authentication authentication){
     AuthorExtended authorExtended = (AuthorExtended)authentication.getPrincipal();
+    Author author = authorService.findAuthorById(authorExtended.getId());
     ModelAndView result = new ModelAndView("note-list");
     result.addObject("notes", noteService.findAllByAuthorId(authorExtended.getId()));
-    result.addObject("author", authorExtended.getUsername());
+    result.addObject("author", author.getName());
+    result.addObject("authority", author.getAuthority());
     return result;
   }
   @GetMapping("/create")

@@ -2,6 +2,7 @@ package ua.goit.notes.author;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.ToString;
@@ -17,6 +18,7 @@ public class Author {
   private long id;
   @NotBlank(message = "Name is mandatory")
   @Size(min = 5, max = 50)
+  @Pattern(regexp = "^[a-zA-Z\\d]*$")
   private String name;
   @ToString.Exclude
   private String password;

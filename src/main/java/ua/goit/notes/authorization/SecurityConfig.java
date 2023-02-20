@@ -15,18 +15,19 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
     http
         .headers().frameOptions().sameOrigin() // for /h2-console
-        .and()
+          .and()
         .csrf().disable()
         .authorizeHttpRequests()
-        .requestMatchers("/login").permitAll()
-        .requestMatchers("/register").permitAll()
-        .requestMatchers("/note/share/**").permitAll()
-        .requestMatchers("/note/**").authenticated()
-        .requestMatchers("/h2-console").authenticated()
+          .requestMatchers("/login").permitAll()
+          .requestMatchers("/register").permitAll()
+          .requestMatchers("/note/share/**").permitAll()
+          .requestMatchers("/note/**").authenticated()
+          .requestMatchers("/h2-console").authenticated()
+          .requestMatchers("/admin/**").hasAnyAuthority("ADMIN", "MANAGER")
         .anyRequest().authenticated()
-        .and()
+          .and()
         .formLogin()
-        .loginPage("/login")
+          .loginPage("/login")
         .defaultSuccessUrl("/note/list", true);
     return http.build();
   }
