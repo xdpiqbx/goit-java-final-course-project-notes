@@ -24,6 +24,7 @@ Environment Variables:
 ### Technologies used in project
 
 - Spring Boot
+- Spring MVC
 - Spring Security
 - Spring Data
 - Spring Validation
