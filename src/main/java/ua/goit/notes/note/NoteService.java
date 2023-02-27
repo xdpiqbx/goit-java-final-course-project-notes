@@ -25,7 +25,6 @@ public class NoteService {
 
   public void createNewNote(AuthorExtended authorExt, NoteDTO noteDTO){
     Note note = new Note();
-    note.setId(UUID.randomUUID().toString());
     note.setTitle(noteDTO.getTitle());
     note.setContent(noteDTO.getContent());
     note.setAccessType(AccessType.valueOf(noteDTO.getAccessType().name().toUpperCase()));
@@ -87,7 +86,6 @@ public class NoteService {
     Arrays.stream(strings).forEach(str->{
       Note note = new Note();
       String[] titleContent = str.split("#");
-      note.setId(UUID.randomUUID().toString());
       note.setTitle(titleContent[0]);
       note.setContent(titleContent[1]);
       note.setAccessType(AccessType.PRIVATE);

@@ -10,6 +10,7 @@ import ua.goit.notes.author.Author;
 @Entity
 public class Note {
   @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
   @NotBlank(message = "Title is mandatory")
   @Size(min = 5, max = 100)
