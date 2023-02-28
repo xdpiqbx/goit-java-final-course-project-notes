@@ -15,8 +15,8 @@ import java.util.*;
 @RequiredArgsConstructor
 public class NoteService {
   private final NoteRepository noteRepository;
-  public ArrayList<Note> findAllByAuthorId(long id){
-    ArrayList<Note> allByAuthorId = noteRepository.findAllByAuthorId(id);
+  public LinkedList<Note> findAllByAuthorId(long id){
+    LinkedList<Note> allByAuthorId = noteRepository.findAllByAuthorId(id);
     allByAuthorId.forEach(note -> {
       note.setContent(this.convertMarkdownToPlainText(note.getContent()));
     });
