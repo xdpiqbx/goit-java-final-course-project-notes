@@ -22,7 +22,6 @@ public class SecurityConfig {
           .requestMatchers("/register").permitAll()
           .requestMatchers("/note/share/**").permitAll()
           .requestMatchers("/note/**").authenticated()
-          .requestMatchers("/h2-console").authenticated()
           .requestMatchers("/admin/**").hasAnyAuthority("ADMIN", "MANAGER")
         .anyRequest().authenticated()
           .and()
