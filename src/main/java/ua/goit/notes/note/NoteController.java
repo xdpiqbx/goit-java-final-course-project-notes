@@ -23,7 +23,7 @@ public class NoteController {
     AuthorExtended authorExtended = (AuthorExtended)authentication.getPrincipal();
     Author author = authorService.findAuthorById(authorExtended.getId());
     ModelAndView result = new ModelAndView("note-list");
-    result.addObject("notes", noteService.findAllByAuthorId(authorExtended.getId()));
+    result.addObject("notes", author.getNotes());
     result.addObject("author", author.getName());
     result.addObject("authority", author.getAuthority());
     return result;
@@ -46,8 +46,12 @@ public class NoteController {
     return new RedirectView("/note/list");
   }
   @GetMapping("/edit")
-  public ModelAndView pageEditNote(@RequestParam String id){
+  public ModelAndView pageEditNote(Authentication authentication, @RequestParam String id){
+    AuthorExtended authorExtended = (AuthorExtended)authentication.getPrincipal();
     Note note = noteService.getNoteById(id);
+    if(note.getAuthor().getId() != authorExtended.getId()){
+      return new ModelAndView("note-not-exists");
+    }
     ModelAndView result = new ModelAndView("create-or-edit-note");
     result.addObject("note", note);
     result.addObject("public", note.getAccessType().getType().equals("public"));
@@ -64,6 +68,10 @@ public class NoteController {
       return new RedirectView("/note/create-edit-note-error-page");
     }
     AuthorExtended author = (AuthorExtended)authentication.getPrincipal();
+    Note note = noteService.getNoteById(noteDTO.getId());
+    if(note.getAuthor().getId() != author.getId()){
+      return new RedirectView("/note/list");
+    }
     noteService.editNote(author, noteDTO);
     return new RedirectView("/note/list");
   }
