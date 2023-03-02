@@ -2,7 +2,7 @@
 
 ---
 
-[Notes App on Heroku](https://notes-project.herokuapp.com/login)
+[Notes App on Heroku](https://team-notes.herokuapp.com/)
 
 ---
 
